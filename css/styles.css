@@ -1,0 +1,30 @@
+body {
+    font-family: 'Lato';
+    background-color: #FEFEFE;
+}
+
+
+span {
+    width: 50px;
+
+    font-size: 18px;
+    font-weight: 600;
+    font-color: #FFF;
+    margin: 5px 2px;
+}
+ i {
+    opacity: 0.1;
+}
+
+i:hover {
+    opacity: 0.95;
+}
+.completed {
+    text-decoration: line-through;
+    opacity: 0.5;
+
+}
+.checked {
+    opacity: 1;
+}
+

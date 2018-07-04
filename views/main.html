@@ -1,0 +1,76 @@
+<div class="container mx-auto mt-5 text-center w-75">
+
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title">ToDoList</h1>
+            <form ng-submit="mainCtrl.addTask()">
+                <div class="form-group">
+                    <input class="form-control" ng-model='mainCtrl.newTask' type="text" placeholder="Enter your task and press Enter">
+                </div>
+            </form>
+            <ul class="nav nav-tabs text-center mx-auto" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="All-tab" data-toggle="tab" ng-click='mainCtrl.status =""; ' role="tab" aria-controls="All"
+                        aria-selected="true">
+                        <i class="fa fa-list mx-1 checked" aria-hidden="true"></i>All</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="Completed-tab" data-toggle="tab" ng-click='mainCtrl.status = true ; ' role="tab" aria-controls="Completed"
+                        aria-selected="false">
+                        <i class="fa fa-check-circle checked mx-1" aria-hidden="true"></i>Completed</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="Incomplete-tab" data-toggle="tab" ng-click='mainCtrl.status = false; ' role="tab" aria-controls="Incomplete"
+                        aria-selected="false">
+                        <i class="fa fa-check-circle mx-1 " aria-hidden="true"></i> Incomplete</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+
+                <ul class="list-group">
+                    <h6 class='my-1' ng-if='mainCtrl.tasks.length===0'> No Tasks</h6>
+
+                    <li class="list-group-item my-1" ng-repeat="task in mainCtrl.tasks   | filter: mainCtrl.status track by $index ">
+                        <span class="pull-left">
+                            <i class="fa fa-check-circle " ng-class="{checked: task.completed}" aria-hidden="true" ng-click="mainCtrl.taskStatus(task.task)"></i>&nbsp;&nbsp; {{$index+1}} </span>
+                        <span ng-class="{'completed': task.completed}">{{task.task }}</span>
+                        <div class="pull-right" ng-if="mainCtrl.status ===''">
+                            <i class="fa fa-chevron-up mx-1" ng-if='$index>0' ng-click="mainCtrl.moveUp(task.task)" aria-hidden="true"></i>
+                            <i class="fa fa-chevron-down mx-1" ng-if='$index < mainCtrl.tasks.length-1' ng-click="mainCtrl.moveDown(task.task)" aria-hidden="true"></i>
+                            <i class="fa fa-pencil mx-1" data-toggle="modal" data-target="#edit" ng-click="mainCtrl.taskToEdit($index,task)"
+                                aria-hidden="true"></i>
+                            <i class="fa fa-times mx-1" ng-click="mainCtrl.deleteTask($index)" aria-hidden="true"></i>
+                        </div>
+                    </li>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Edit Task</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <input class="form-control" ng-submit="mainCtrl.editTask(mainCtrl.editTaskIndex)" ng-model='mainCtrl.editedText' type="text"
+                                                placeholder="Enter your task and press Enter">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" ng-click="mainCtrl.editTask(mainCtrl.editTaskIndex)" data-dismiss="modal">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
